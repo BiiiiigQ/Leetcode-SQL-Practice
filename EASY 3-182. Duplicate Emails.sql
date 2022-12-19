@@ -5,6 +5,18 @@ FROM Person
 GROUP BY email
 HAVING COUNT(email) >= 2
 
+-- ANSWER 2: WINDOW FUNCTION
+
+SELECT DISTINCT email AS Email
+FROM
+(
+    SELECT *,
+        COUNT(id) OVER(PARTITION BY email) AS email_cnt
+    FROM Person
+) AS p
+WHERE email_cnt >= 2
+
+**********************************************************
 
 -- ANSWER 2: LEFT OUTER JOIN
 
