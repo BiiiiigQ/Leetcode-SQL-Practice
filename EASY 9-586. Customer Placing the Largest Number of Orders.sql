@@ -54,5 +54,15 @@ HAVING COUNT(order_number) = (
 -- ANSWER 3: 
 -- if we have more than 1 customers who have placed the most orders
 
+WITH cte AS
+(
+    SELECT customer_number, COUNT(order_number) AS cnt_order
+    FROM Orders
+    GROUP BY customer_number
+)
 
+SELECT customer_number
+FROM cte
+WHERE cnt_order >= ALL (SELECT cnt_order
+                        FROM cte)
 
