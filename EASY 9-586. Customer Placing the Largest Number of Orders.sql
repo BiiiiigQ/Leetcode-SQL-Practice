@@ -18,6 +18,8 @@ LIMIT 1
 -- ANSWER 2: 
 -- if we have more than 1 customers who have placed the most orders
 
+--<1>
+
 WITH cte AS
 (
     SELECT customer_number, COUNT(order_number) AS count_order
@@ -34,6 +36,20 @@ WHERE count_order =
     FROM cte
 )
 
+--<2>
+
+SELECT customer_number
+FROM Orders 
+GROUP BY customer_number
+HAVING COUNT(order_number) = (
+                                SELECT MAX(cnt_order)
+                                FROM
+                                (
+                                    SELECT customer_number, COUNT(order_number) AS cnt_order
+                                    FROM Orders
+                                    GROUP BY customer_number
+                                ) AS o
+                              )
 
 -- ANSWER 3: 
 -- if we have more than 1 customers who have placed the most orders
