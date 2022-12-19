@@ -22,3 +22,15 @@ FROM Weather w1
 WHERE w1.temperature > (SELECT w2.temperature
                         FROM Weather w2
                         WHERE DATEDIFF(w1.recordDate, w2.recordDate)=1)
+
+
+-- ANSWER 4: WINDOW FUNCTION
+SELECT id
+FROM
+(
+    SELECT id, recordDate, temperature,
+           DATEDIFF(recordDate, LAG(recordDate) OVER(ORDER BY recordDate)) AS date_gap,
+           temperature - LAG(temperature) OVER(ORDER BY recordDate) AS temp_gap
+    FROM Weather
+) AS w
+WHERE date_gap = 1 AND temp_gap > 0
