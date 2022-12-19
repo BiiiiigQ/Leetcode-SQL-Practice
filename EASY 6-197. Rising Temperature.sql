@@ -7,4 +7,18 @@ FROM Weather w1
 WHERE w2.temperature > w1.temperature
 
 
--- ANSWER 2: 
+-- ANSWER 2: SUBQUERY, DATE_ADD()
+
+SELECT w1.id
+FROM Weather w1
+WHERE w1.temperature > (SELECT w2.temperature
+                        FROM Weather w2
+                        WHERE w2.recordDate = DATE_ADD(w1.recordDate, INTERVAL -1 DAY))
+
+-- ANSWER 3: SUBQUERY, DATEDIFF()
+
+SELECT w1.id
+FROM Weather w1
+WHERE w1.temperature > (SELECT w2.temperature
+                        FROM Weather w2
+                        WHERE DATEDIFF(w1.recordDate, w2.recordDate)=1)
