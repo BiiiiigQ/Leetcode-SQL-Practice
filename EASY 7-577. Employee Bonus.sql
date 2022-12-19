@@ -19,3 +19,23 @@ FROM
                     ON e.empId = b.empId
 ) AS eb
 WHERE bonus < 1000
+
+
+-- ANSWER 3: LEFT OUTER JOIN, IFNULL()
+
+SELECT e.name, b.bonus
+FROM Employee e
+    LEFT OUTER JOIN Bonus b
+                 ON e.empId = b.empId
+WHERE IFNULL(b.bonus, 0) < 1000
+
+
+-- ANSWER 4: LEFT OUTER JOIN, COALESCE()
+
+SELECT e.name, b.bonus
+FROM Employee e
+    LEFT OUTER JOIN Bonus b
+                 ON e.empId = b.empId
+WHERE COALESCE(b.bonus, 0) < 1000
+
+
