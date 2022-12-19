@@ -2,6 +2,7 @@
 -- ANSWER 1: LIMIT
 -- only one customer has placed more orders than any other customers
 
+--<1>
 SELECT customer_number
 FROM
 (
@@ -12,6 +13,12 @@ FROM
 ORDER BY count_order DESC
 LIMIT 1
 
+--<2>
+SELECT customer_number
+FROM Orders
+GROUP BY customer_number
+ORDER BY COUNT(order_number) DESC
+LIMIT 1
 
 *************************************************************************
 
