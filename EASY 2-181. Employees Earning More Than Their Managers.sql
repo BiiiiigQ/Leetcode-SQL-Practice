@@ -16,10 +16,24 @@ WHERE emp.salary > (SELECT mag.salary
                     WHERE emp.managerId = mag.id)
 
 
--- ANSWER 2: SUBQUERY (2)
+-- ANSWER 3: SUBQUERY (2)
 
 SELECT emp.name AS Employee
 FROM Employee emp
 WHERE EXISTS (SELECT 1
               FROM Employee mag
               WHERE emp.managerId = mag.id AND emp.salary > mag.salary)
+
+
+-- ANSWER 3: SUBQUERY (3)
+
+SELECT name AS Employee
+FROM
+(
+    SELECT *,
+        (SELECT salary
+         FROM Employee mag
+         WHERE emp.managerId = mag.id) AS mag_salary
+    FROM Employee emp
+) em
+WHERE salary > mag_salary
