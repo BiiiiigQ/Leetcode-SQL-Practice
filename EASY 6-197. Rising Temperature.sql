@@ -34,3 +34,8 @@ FROM
     FROM Weather
 ) AS w
 WHERE date_gap = 1 AND temp_gap > 0
+
+
+
+-- 本题是要根据题目中给出的条件：previous date，来链接两个表格（两个表格实际上都是同一个表格，self comparison）。
+-- 通过条件链接好两个表格的信息以后，在根据给出的条件判断是否留下本行
